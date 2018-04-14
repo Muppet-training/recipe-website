@@ -3,9 +3,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router-dom';
 
 const MyAwesomeReactComponent = () => (
-    <Link to="/login">
-        <RaisedButton label="Login" />
-    </Link>
+    <div>
+        <Link to="/login">
+            <RaisedButton label="Login" />
+        </Link>
+        <Link to="/receipe">
+            <RaisedButton label="receipe" />
+        </Link>
+    </div>
 
 );
 

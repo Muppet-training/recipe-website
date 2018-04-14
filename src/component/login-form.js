@@ -7,15 +7,15 @@ class LoginForm extends Component {
     constructor(props){
         super(props);
         this.state={
-            username:'',
-            password:''
+            username:'atiq',
+            password:'rehman'
         }
     }
     render() {
         return (
             <div>
                 <MuiThemeProvider>
-                    <div>
+                    <div style={{textAlign: 'center'}}>
                         <AppBar
                             title="Login"
                         />
