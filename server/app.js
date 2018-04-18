@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const usersRouter = require( "./routes/users");
+const recipeRouter = require( "./routes/recipe");
 const indexRouter = require( "./routes/index");
 
 // Server constants
@@ -25,13 +26,15 @@ mongoose.connect(dbURL, function(err) {
         console.log("Your MongoDB is running at " + dbURL);
     }
 });
+mongoose.Promise = global.Promise;
 
 // Handling Routes for API.
-app.use("/api/users", usersRouter);
+app.use("/api/add-recipe", recipeRouter);
+app.use("/api/edit-recipe", usersRouter);
 app.use("/api/home", indexRouter);
-app.get("/", function(req, res) {
+/*app.get("/", function(req, res) {
     res.sendFile("index.html");
-});
+});*/
 
 // Handle 404 Request
 app.use((req, res) => {

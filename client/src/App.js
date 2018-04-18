@@ -8,6 +8,7 @@ import reducers from './reducers/index';
 import MyAwesomeReactComponent from './component/MyAwesomeReactComponent';
 import LoginForm from './component/login-form';
 import ReceipeEdit from './component/ReceipeEdit';
+import recipeAdd from './container/recipeAdd';
 import { Router, Route } from 'react-router-dom';
 // import history from './history';
 import { createBrowserHistory } from 'history';
@@ -27,7 +28,8 @@ class App extends Component {
                         <Router history={history}>
                             <div>
                                 <Route path="/login" component={LoginForm} />
-                                <Route path="/receipe" component={ReceipeEdit} />
+                                <Route path="/edit-recipe" component={ReceipeEdit} />
+                                <Route path="/add-recipe" component={recipeAdd} />
                                 <Route path="/" exact component={MyAwesomeReactComponent} />
                             </div>
 

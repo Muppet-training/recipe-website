@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { getReceipe } from '../actions/ReceipeAction';
+import { getRecipe } from '../actions/RecipeAction';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -20,7 +20,7 @@ class ReceipeEdit extends Component {
     }
 
     componentDidMount(){
-        this.props.getReceipe();
+        this.props.getRecipe();
     }
 
     componentWillReceiveProps(nextProp){
@@ -73,4 +73,4 @@ function mapStateToProps(state){
         receipedata:  state.receipe.data
     }
 }
-export default connect(mapStateToProps, { getReceipe })(ReceipeEdit);
+export default connect(mapStateToProps, { getRecipe })(ReceipeEdit);
