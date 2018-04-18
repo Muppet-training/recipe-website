@@ -13,6 +13,9 @@ const MyAwesomeReactComponent = () => (
         <Link to="/add-recipe">
             <RaisedButton label="Add Recipe" />
         </Link>
+        <Link to="/list-recipes">
+            <RaisedButton label="Recipe List" />
+        </Link>
     </div>
 );
 

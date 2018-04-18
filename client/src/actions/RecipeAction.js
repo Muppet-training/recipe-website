@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getRecipe() {
     return dispatch => {
 
-        return axios.get('/api/edit-recipe').then(response => {
+        return axios.get('/api/add-recipe').then(response => {
                 console.log('action.response:', response);
                 dispatch({
                     type: 'LOAD_RECIPE_DATA',
@@ -23,7 +23,7 @@ export function getRecipe() {
 export function addRecipe(data) {
     console.log('Data: ', data);
     return dispatch => {
-        return axios.post('/api/add-recipe').then(response => {
+        return axios.post('/api/add-recipe', data).then(response => {
                 console.log('action.response:', response);
                 dispatch({
                     type: 'ADD_RECIPE_DATA',

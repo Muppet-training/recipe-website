@@ -9,6 +9,7 @@ import MyAwesomeReactComponent from './component/MyAwesomeReactComponent';
 import LoginForm from './component/login-form';
 import ReceipeEdit from './component/ReceipeEdit';
 import recipeAdd from './container/recipeAdd';
+import RecipeList from './container/RecipeList';
 import { Router, Route } from 'react-router-dom';
 // import history from './history';
 import { createBrowserHistory } from 'history';
@@ -30,6 +31,7 @@ class App extends Component {
                                 <Route path="/login" component={LoginForm} />
                                 <Route path="/edit-recipe" component={ReceipeEdit} />
                                 <Route path="/add-recipe" component={recipeAdd} />
+                                <Route path="/list-recipes" component={RecipeList} />
                                 <Route path="/" exact component={MyAwesomeReactComponent} />
                             </div>
 

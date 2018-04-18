@@ -24,7 +24,7 @@ class ReceipeEdit extends Component {
     }
 
     componentWillReceiveProps(nextProp){
-        this.setState({ editForm: nextProp.receipedata})
+        this.setState({ editForm: nextProp.recipedata})
     }
 
     handleChange(event){
@@ -70,7 +70,7 @@ const style = {
 };
 function mapStateToProps(state){
     return{
-        receipedata:  state.receipe.data
+        recipedata:  state.recipe.data
     }
 }
 export default connect(mapStateToProps, { getRecipe })(ReceipeEdit);
