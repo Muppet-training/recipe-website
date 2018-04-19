@@ -5,9 +5,9 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import reducers from './reducers/index';
-import MyAwesomeReactComponent from './component/MyAwesomeReactComponent';
+import Home from './component/Home';
 import LoginForm from './component/login-form';
-import ReceipeEdit from './component/ReceipeEdit';
+import ReceipeEdit from './container/ReceipeEdit';
 import recipeAdd from './container/recipeAdd';
 import RecipeList from './container/RecipeList';
 import { Router, Route } from 'react-router-dom';
@@ -29,10 +29,10 @@ class App extends Component {
                         <Router history={history}>
                             <div>
                                 <Route path="/login" component={LoginForm} />
-                                <Route path="/edit-recipe" component={ReceipeEdit} />
+                                <Route path="/edit-recipe/:id" component={ReceipeEdit} />
                                 <Route path="/add-recipe" component={recipeAdd} />
                                 <Route path="/list-recipes" component={RecipeList} />
-                                <Route path="/" exact component={MyAwesomeReactComponent} />
+                                <Route path="/" exact component={Home} />
                             </div>
 
                         </Router>

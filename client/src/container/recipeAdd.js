@@ -19,9 +19,10 @@ class recipeAdd extends Component {
         this.submitForm = this.submitForm.bind(this);
     }
 
-    submitForm(e) {
-        console.log('Add Form Values', this.state.addForm);
-        this.props.addRecipe(this.state.addForm);
+    submitForm() {
+        this.props.addRecipe(this.state.addForm).then((res) => {
+            this.setState({ successMsg: res });
+        });
     }
 
     handleChange(event) {
@@ -33,6 +34,7 @@ class recipeAdd extends Component {
         const { name, type, total_grams } = this.state.addForm;
         return (
             <div>
+                <div>{this.props.successMsg ? this.props.successMsg : ''}</div>
                 <MuiThemeProvider>
                     <div style={{ textAlign: 'center' }}>
                         <TextField
@@ -73,4 +75,9 @@ const style = {
     margin: 15
 };
 
-export default connect(null, { addRecipe })(recipeAdd);
+function mapStateToProps(state){
+    return{
+        successMsg:  state.recipe.successMsg
+    }
+}
+export default connect(mapStateToProps, { addRecipe })(recipeAdd);

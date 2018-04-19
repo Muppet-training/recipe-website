@@ -3,26 +3,30 @@ const Recipe = require('../models/recipe');
 const router = express.Router();
 
 
-router.get('/', function(req, res, next) {
-    console.log('user request received...');
-    res.json({
-        id: 2,
-        name: 'Cake',
-        type: 'Dessert',
-        total_grams: 450
-    });
-});
-
-router.post('/', function(req, res, next) {
-    console.log('user add data', req.body);
-    Recipe.create(req.body).then(function (recipe) {
+router.get('/', function(req, res) {
+    Recipe.find().then(function (recipe) {
         res.send(recipe);
     });
 });
 
-router.put('/', function(req, res, next) {
-    console.log('user add data', req.body);
-    res.end();
+router.post('/', function(req, res) {
+    Recipe.create(req.body).then(function (recipe) {
+        res.send('Add Recipe Successfully');
+    });
+});
+
+router.put('/api/add-recipe/:id', function(req, res) {
+    Recipe.findByIdAndUpdate({_id: req.params.id }, req.body).then(function () {
+        Recipe.findOne({_id: req.params.id}).then(function (recipe) {
+            res.send(recipe);
+        });
+    });
+});
+
+router.delete('/:id', function(req, res) {
+    Recipe.remove({_id: req.params.id }).then(function () {
+        res.send('Deleted Recipe successfully');
+    });
 });
 
 module.exports = router;

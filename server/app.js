@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-const usersRouter = require( "./routes/users");
+const recipeListRouter = require( "./routes/recipeList");
 const recipeRouter = require( "./routes/recipe");
 const indexRouter = require( "./routes/index");
 
@@ -29,8 +29,10 @@ mongoose.connect(dbURL, function(err) {
 mongoose.Promise = global.Promise;
 
 // Handling Routes for API.
+app.use("/", recipeRouter);
 app.use("/api/add-recipe", recipeRouter);
-app.use("/api/edit-recipe", usersRouter);
+app.use("/api/delete-recipe", recipeRouter);
+app.use("/api/edit-recipe", recipeListRouter);
 app.use("/api/home", indexRouter);
 /*app.get("/", function(req, res) {
     res.sendFile("index.html");

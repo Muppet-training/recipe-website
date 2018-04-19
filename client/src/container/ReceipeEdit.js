@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { getRecipe } from '../actions/RecipeAction';
+import { getRecipeEdit, editRecipe } from '../actions/RecipeAction';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -11,54 +11,59 @@ class ReceipeEdit extends Component {
         super(props);
         this.state={
             editForm: {
-                title:'',
-                receipe:'',
-                ingrediants:''
+                name:'',
+                type:'',
+                total_grams:''
             }
         };
         this.handleChange = this.handleChange.bind(this);
+        this.submitForm = this.submitForm.bind(this);
     }
 
     componentDidMount(){
-        this.props.getRecipe();
+        this.props.getRecipeEdit(this.props.match.params.id);
     }
 
     componentWillReceiveProps(nextProp){
-        this.setState({ editForm: nextProp.recipedata})
+        const {name, type, total_grams} = nextProp.recipedata;
+        this.setState({ editForm: {name, type, total_grams}})
     }
 
     handleChange(event){
         const { name, value } = event.target;
         this.setState({ editForm: { ...this.state.editForm, [name]: value}})
     }
+    submitForm() {
+        this.props.editRecipe(this.props.match.params.id, this.state.editForm);
+    }
     render() {
-        const { title, receipe, ingrediants } = this.state.editForm;
+        const { name, type, total_grams } = this.state.editForm;
         return (
             <div>
                 <MuiThemeProvider>
                     <div style={{textAlign: 'center'}}>
                         <TextField
-                            floatingLabelText="Title"
-                            value={title}
-                            name="title"
+                            floatingLabelText="name"
+                            value={name}
+                            name="name"
                             onChange = {this.handleChange}
                         />
                         <br/>
                         <TextField
-                            floatingLabelText="receipe"
-                            name="receipe"
-                            value={receipe}
+                            floatingLabelText="type"
+                            name="type"
+                            value={type}
                             onChange = {this.handleChange}
                         />
                         <br/>
                         <TextField
-                            floatingLabelText="ingrediants"
-                            name="ingrediants"
-                            value={ingrediants}
+                            floatingLabelText="total_grams"
+                            name="total_grams"
+                            value={total_grams}
                             onChange = {this.handleChange}
                         />
                         <br/>
-                        <RaisedButton label="Save" primary={true} style={style} onClick={() => {console.log('submited data is', this.state.editForm)}} />
+                        <RaisedButton label="Save" primary={true} style={style} onClick={this.submitForm} />
                     </div>
                 </MuiThemeProvider>
             </div>
@@ -73,4 +78,4 @@ function mapStateToProps(state){
         recipedata:  state.recipe.data
     }
 }
-export default connect(mapStateToProps, { getRecipe })(ReceipeEdit);
+export default connect(mapStateToProps, { getRecipeEdit, editRecipe })(ReceipeEdit);

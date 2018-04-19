@@ -3,8 +3,22 @@ export default (state = {}, action) => {
     switch (action.type) {
         case 'LOAD_RECIPE_DATA':
             if (!action.error) {
-                console.log('reducer lis', action.payload);
                 return  { ...state, data: action.payload };
+            }
+            break;
+        case 'EDIT_RECIPE_DATA':
+            if (!action.error) {
+                return  { ...state, data: action.payload };
+            }
+            break;
+        case 'ADD_RECIPE_DATA':
+            if (!action.error) {
+                return  { ...state, successMsg: action.payload };
+            }
+            break;
+        case 'DELETE_RECIPE_DATA':
+            if (!action.error) {
+                return  { ...state, deleteMsg: action.payload };
             }
             break;
         default:

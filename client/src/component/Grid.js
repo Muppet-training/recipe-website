@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { removeRecipe } from '../actions/RecipeAction';
+
+
 import {
     Table,
     TableBody,
@@ -14,48 +21,58 @@ import {
  */
 class Grid extends Component {
 
+    removeRecipe(e,id){
+        e.preventDefault();
+        this.props.removeRecipe(id);
+    }
+
     render(){
-        console.log('grid list is ', this.props.recipelist);
-        const { name, type, total_grams } = this.props.recipelist;
+        const style = {
+            margin: 12,
+        };
         return(
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
-                        <TableHeaderColumn>Type</TableHeaderColumn>
-                        <TableHeaderColumn>Total_Grams</TableHeaderColumn>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableRowColumn><Link to="/edit-recipe">{name}</Link></TableRowColumn>
-                        <TableRowColumn>{type}</TableRowColumn>
-                        <TableRowColumn>{total_grams}</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>2</TableRowColumn>
-                        <TableRowColumn>Randal White</TableRowColumn>
-                        <TableRowColumn>Unemployed</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>3</TableRowColumn>
-                        <TableRowColumn>Stephanie Sanders</TableRowColumn>
-                        <TableRowColumn>Employed</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>4</TableRowColumn>
-                        <TableRowColumn>Steve Brown</TableRowColumn>
-                        <TableRowColumn>Employed</TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                        <TableRowColumn>5</TableRowColumn>
-                        <TableRowColumn>Christopher Nolan</TableRowColumn>
-                        <TableRowColumn>Unemployed</TableRowColumn>
-                    </TableRow>
-                </TableBody>
-            </Table>
+            <div>
+                <div>{this.props.deleteMsg ? this.props.deleteMsg : ''}</div>
+                <Link to="/add-recipe">
+                    <FloatingActionButton style={style}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </Link>
+                <Table selectable={false} >
+                    <TableHeader>
+                        <TableRow>
+                            <TableHeaderColumn>Name</TableHeaderColumn>
+                            <TableHeaderColumn>Type</TableHeaderColumn>
+                            <TableHeaderColumn>Total_Grams</TableHeaderColumn>
+                            <TableHeaderColumn>Action</TableHeaderColumn>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody displayRowCheckbox={false}>
+                        {
+                            this.props.recipelist.length && this.props.recipelist.map((recipe) => {
+                                return <TableRow key={recipe._id}>
+                                    <TableRowColumn>{recipe.name}</TableRowColumn>
+                                    <TableRowColumn>{recipe.type}</TableRowColumn>
+                                    <TableRowColumn>{recipe.total_grams}</TableRowColumn>
+                                    <TableRowColumn>
+                                        <Link to={`/edit-recipe/${recipe._id}`}>
+                                            <RaisedButton label="edit" primary={true} style={style} />
+                                        </Link>
+                                        <RaisedButton label="delete" secondary={true} style={style} onClick={(e) => this.removeRecipe(e, recipe._id)} />
+                                    </TableRowColumn>
+                                </TableRow>
+                            })
+                        }
+                    </TableBody>
+                </Table>
+            </div>
         );
     }
 }
 
-export default Grid;
+function mapStateToProps(state){
+    return{
+        deleteMsg:  state.recipe.deleteMsg
+    }
+}
+export default connect(mapStateToProps, { removeRecipe })(Grid);

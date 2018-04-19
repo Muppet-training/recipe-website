@@ -7,11 +7,7 @@ class RecipeList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipelist: {
-                name: '',
-                type: '',
-                total_grams: ''
-            }
+            recipelist: {}
         };
     }
 
@@ -24,7 +20,6 @@ class RecipeList extends Component {
     }
 
     render() {
-        console.log('recipelist is ', this.state.recipelist);
         return (
             <div>
                 <Grid recipelist={this.state.recipelist} />
@@ -33,9 +28,7 @@ class RecipeList extends Component {
     }
 }
 
-const style = {
-    margin: 15
-};
+
 function mapStateToProps(state){
     return{
         recipedata:  state.recipe.data
