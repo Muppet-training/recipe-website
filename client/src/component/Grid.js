@@ -21,15 +21,37 @@ import {
  */
 class Grid extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = { deleteId: null }
+    }
+
     removeRecipe(e,id){
         e.preventDefault();
         this.props.removeRecipe(id);
+        this.setState({ deleteId: id })
     }
 
     render(){
         const style = {
             margin: 12,
         };
+        const recipeList = this.props.recipelist.length && this.props.recipelist.filter((recipe) => {
+            return this.state.deleteId !== recipe._id;
+        });
+        const recipeRow = recipeList && recipeList.length && recipeList.map((recipe) => {
+            return <TableRow key={recipe._id}>
+                <TableRowColumn>{recipe.name}</TableRowColumn>
+                <TableRowColumn>{recipe.type}</TableRowColumn>
+                <TableRowColumn>{recipe.total_grams}</TableRowColumn>
+                <TableRowColumn>
+                    <Link to={`/edit-recipe/${recipe._id}`}>
+                        <RaisedButton label="edit" primary={true} style={style} />
+                    </Link>
+                    <RaisedButton label="delete" secondary={true} style={style} onClick={(e) => this.removeRecipe(e, recipe._id)} />
+                </TableRowColumn>
+            </TableRow>
+        });
         return(
             <div>
                 <div>{this.props.deleteMsg ? this.props.deleteMsg : ''}</div>
@@ -48,21 +70,7 @@ class Grid extends Component {
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                        {
-                            this.props.recipelist.length && this.props.recipelist.map((recipe) => {
-                                return <TableRow key={recipe._id}>
-                                    <TableRowColumn>{recipe.name}</TableRowColumn>
-                                    <TableRowColumn>{recipe.type}</TableRowColumn>
-                                    <TableRowColumn>{recipe.total_grams}</TableRowColumn>
-                                    <TableRowColumn>
-                                        <Link to={`/edit-recipe/${recipe._id}`}>
-                                            <RaisedButton label="edit" primary={true} style={style} />
-                                        </Link>
-                                        <RaisedButton label="delete" secondary={true} style={style} onClick={(e) => this.removeRecipe(e, recipe._id)} />
-                                    </TableRowColumn>
-                                </TableRow>
-                            })
-                        }
+                        {recipeRow}
                     </TableBody>
                 </Table>
             </div>

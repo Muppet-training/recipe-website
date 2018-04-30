@@ -35,6 +35,7 @@ class ReceipeEdit extends Component {
     }
     submitForm() {
         this.props.editRecipe(this.props.match.params.id, this.state.editForm);
+        this.props.history.push('/list-recipes');
     }
     render() {
         const { name, type, total_grams } = this.state.editForm;
